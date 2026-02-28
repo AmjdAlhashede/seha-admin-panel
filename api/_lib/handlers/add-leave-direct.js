@@ -1,4 +1,4 @@
-const prisma = require('./_lib/prisma.js');
+const prisma = require('../prisma.js');
 
 // Admin direct add - creates leave with "approved" status immediately
 module.exports = async function handler(req, res) {

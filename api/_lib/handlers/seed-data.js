@@ -1,4 +1,4 @@
-const prisma = require('./_lib/prisma.js');
+const prisma = require('../prisma.js');
 
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
