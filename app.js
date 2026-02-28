@@ -32,32 +32,7 @@ window.logout = () => {
     window.location.href = 'login.html';
 };
 
-window.seedDatabase = async () => {
-    const btn = document.getElementById('seed-btn');
-    if (!btn) return;
-    const originalHTML = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الشحن...';
-    btn.disabled = true;
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/seed-data`, { method: 'POST' });
-        const data = await response.json();
-
-        if (data.success) {
-            showToast(`✅ ${data.message}`);
-            await loadLeaves();
-            updateStats();
-        } else {
-            showToast('❌ ' + (data.message || 'حدث خطأ'));
-        }
-    } catch (error) {
-        console.error('Seed error:', error);
-        showToast('❌ حدث خطأ في الاتصال بالخادم');
-    } finally {
-        btn.innerHTML = originalHTML;
-        btn.disabled = false;
-    }
-};
 
 async function initApp() {
     await loadLeaves();

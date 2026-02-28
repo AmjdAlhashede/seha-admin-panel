@@ -25,8 +25,9 @@ document.getElementById('login-form').addEventListener('submit', async function 
         const data = await response.json();
 
         if (response.ok && data.success) {
-            // Respect "Remember Me" setting from server/db
-            const storage = data.user.rememberMe ? localStorage : sessionStorage;
+            // Respect "Remember Me" setting from the checkbox
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const storage = rememberMe ? localStorage : sessionStorage;
 
             // Save token and user info
             storage.setItem('admin_token', data.token);
