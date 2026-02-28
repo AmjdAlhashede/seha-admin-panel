@@ -5,7 +5,11 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins for public inquiries
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'apikey']
+}));
 app.use(express.json());
 
 // Serve static files from the parent directory
