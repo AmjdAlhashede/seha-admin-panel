@@ -88,24 +88,7 @@
                     </div>
                 </div>
 
-                <!-- Seed Data Section -->
-                <div class="card-container"
-                    style="margin-bottom:24px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:2px dashed #38bdf8;">
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
-                        <div>
-                            <h3 style="margin-bottom:6px; color:#0369a1;">
-                                <i class="fas fa-database" style="margin-left:8px;"></i>تعبئة قاعدة البيانات
-                            </h3>
-                            <p style="color:#64748b; font-size:0.9rem; margin:0;">أضف 10 سجلات تجريبية واقعية لإجازات
-                                مرضية في قاعدة البيانات للتجربة</p>
-                        </div>
-                        <button id="seed-btn" onclick="seedDatabase()"
-                            style="background:linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color:white; border:none; padding:12px 28px; border-radius:12px; cursor:pointer; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:10px; transition:all 0.3s; box-shadow:0 4px 12px rgba(14,165,233,0.3);">
-                            <i class="fas fa-cloud-arrow-down"></i> شحن البيانات
-                        </button>
-                    </div>
-                </div>
+
 
                 <div class="card-container">
                     <div class="section-header">
@@ -301,7 +284,7 @@
                 </button>
             </div>
             <form id="direct-leave-form" onsubmit="submitDirectLeave(event)">
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div style="display:grid; grid-template-columns:1fr; gap:15px;">
                     <div>
                         <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (عربي)
                             *</label>
@@ -323,12 +306,7 @@
                             style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
                             placeholder="10xxxxxxxx">
                     </div>
-                    <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ
-                            الميلاد *</label>
-                        <input type="date" id="dl-birthDate" required
-                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
-                    </div>
+
                     <div>
                         <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الوظيفة
                             *</label>

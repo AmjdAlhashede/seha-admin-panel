@@ -244,7 +244,7 @@ async function changeStatus(id, newStatus) {
     showToast('⏳ جاري تحديث الحالة...');
 
     try {
-        const response = await fetch(`${API_BASE_URL} /api/update - status`, {
+        const response = await fetch(`${API_BASE_URL}/api/update-status`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, status: newStatus })
@@ -413,7 +413,6 @@ window.viewDetails = (leaveId) => {
     const nameAr = leave.patientNameAr || leave.patientName || '-';
     const nameEn = leave.patientNameEn || leave.patientName || '-';
 
-    const birthDate = leave.birthDate ? new Date(leave.birthDate).toLocaleDateString('ar-SA') : '-';
     const startDate = new Date(leave.startDate).toLocaleDateString('ar-SA');
     const createdDate = leave.createdAt ? new Date(leave.createdAt).toLocaleDateString('ar-SA') : startDate;
 
@@ -438,7 +437,7 @@ window.viewDetails = (leaveId) => {
     let actionButtons = '';
     if (leave.status === 'pending') {
         actionButtons = `
-        < div style = "display:flex; gap:10px; margin-top:20px;" >
+        <div style="display:flex; gap:10px; margin-top:20px;">
                 <button onclick="approveFromModal('${leave.id}')" 
                     style="flex:1; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:1rem; transition:0.2s;">
                     <i class="fas fa-check-circle"></i> موافقة
@@ -447,19 +446,19 @@ window.viewDetails = (leaveId) => {
                     style="flex:1; background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:1rem; transition:0.2s;">
                     <i class="fas fa-times-circle"></i> رفض
                 </button>
-            </div >
+            </div>
         `;
     }
 
     const detailsHTML = `
-        < div style = "background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding:25px; border-radius:12px 12px 0 0; margin:-30px -30px 20px -30px; text-align:center;" >
+        <div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding:25px; border-radius:12px 12px 0 0; margin:-30px -30px 20px -30px; text-align:center;">
             <div style="width:80px; height:80px; background:white; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
                 <i class="fas fa-user-injured" style="font-size:2.5rem; color:#667eea;"></i>
             </div>
             <h3 style="color:white; margin:0; font-size:1.3rem;">${nameAr}</h3>
             <p style="color:rgba(255,255,255,0.8); margin:5px 0 0 0; font-size:0.95rem;">${nameEn}</p>
             <p style="color:rgba(255,255,255,0.9); margin:5px 0 0 0; font-size:0.9rem;">رمز الخدمة: ${leave.serviceCode}</p>
-        </div >
+        </div>
 
         <div style="background:#f8fafc; padding:20px; border-radius:12px; margin-bottom:15px;">
             <h4 style="color:var(--primary); margin-bottom:15px; font-size:1.1rem; display:flex; align-items:center; gap:8px;">
@@ -469,10 +468,6 @@ window.viewDetails = (leaveId) => {
                 <div>
                     <strong style="color:#64748b; font-size:0.85rem;">رقم الهوية:</strong>
                     <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.idNumber || '-'}</p>
-                </div>
-                <div>
-                    <strong style="color:#64748b; font-size:0.85rem;">تاريخ الميلاد:</strong>
-                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${birthDate}</p>
                 </div>
                 <div>
                     <strong style="color:#64748b; font-size:0.85rem;">الجنسية:</strong>
@@ -627,7 +622,7 @@ window.deleteLeave = async (id) => {
     showToast('⏳ جاري الحذف...');
 
     try {
-        const response = await fetch(`/ api / delete -leave ? id = ${id} `, {
+        const response = await fetch(`/api/delete-leave?id=${id}`, {
             method: 'DELETE'
         });
 
@@ -668,7 +663,6 @@ window.submitDirectLeave = async (e) => {
         patientNameAr: document.getElementById('dl-nameAr').value,
         patientNameEn: document.getElementById('dl-nameEn').value,
         idNumber: document.getElementById('dl-idNumber').value,
-        birthDate: document.getElementById('dl-birthDate').value,
         job: document.getElementById('dl-job').value,
         employer: document.getElementById('dl-employer').value,
         nationality: document.getElementById('dl-nationality').value,
