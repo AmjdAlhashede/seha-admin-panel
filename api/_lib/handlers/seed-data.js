@@ -18,11 +18,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الرياض",
                 startDate: new Date("2026-02-20"),
-                endDate: new Date("2026-02-25"),
-                daysCount: 5,
-                diagnosis: "التهاب رئوي حاد",
-                doctorName: "د. سامي الجابر",
-                hospitalName: "مستشفى الملك فهد التخصصي",
                 status: "pending"
             },
             {
@@ -35,11 +30,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "جدة",
                 startDate: new Date("2026-02-18"),
-                endDate: new Date("2026-02-22"),
-                daysCount: 4,
-                diagnosis: "إنفلونزا موسمية",
-                doctorName: "د. منى الأحمد",
-                hospitalName: "مجمع عيادات النور",
                 status: "approved"
             },
             {
@@ -52,11 +42,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الدمام",
                 startDate: new Date("2026-02-15"),
-                endDate: new Date("2026-02-17"),
-                daysCount: 2,
-                diagnosis: "صداع نصفي مزمن",
-                doctorName: "د. عبدالرحمن المالكي",
-                hospitalName: "مستشفى الحبيب",
                 status: "approved"
             },
             {
@@ -69,11 +54,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "مكة المكرمة",
                 startDate: new Date("2026-02-22"),
-                endDate: new Date("2026-02-28"),
-                daysCount: 6,
-                diagnosis: "كسر في اليد اليمنى",
-                doctorName: "د. فهد الحربي",
-                hospitalName: "مستشفى الملك عبدالعزيز",
                 status: "pending"
             },
             {
@@ -86,11 +66,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الرياض",
                 startDate: new Date("2026-02-10"),
-                endDate: new Date("2026-02-12"),
-                daysCount: 2,
-                diagnosis: "نزلة معوية",
-                doctorName: "د. ماجد العمري",
-                hospitalName: "مستشفى الجامعي",
                 status: "rejected"
             },
             {
@@ -103,11 +78,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "الطائف",
                 startDate: new Date("2026-02-24"),
-                endDate: new Date("2026-02-27"),
-                daysCount: 3,
-                diagnosis: "حساسية موسمية شديدة",
-                doctorName: "د. هند العنزي",
-                hospitalName: "مستشفى الملك فيصل",
                 status: "pending"
             },
             {
@@ -120,11 +90,6 @@ module.exports = async function handler(req, res) {
                 nationality: "مصري",
                 city: "الرياض",
                 startDate: new Date("2026-02-19"),
-                endDate: new Date("2026-02-21"),
-                daysCount: 2,
-                diagnosis: "آلام في الظهر",
-                doctorName: "د. طارق الشهري",
-                hospitalName: "مركز الأمل الطبي",
                 status: "approved"
             },
             {
@@ -137,11 +102,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "الرياض",
                 startDate: new Date("2026-02-23"),
-                endDate: new Date("2026-02-26"),
-                daysCount: 3,
-                diagnosis: "التهاب اللوزتين",
-                doctorName: "د. أمل السبيعي",
-                hospitalName: "مستشفى الملك خالد",
                 status: "pending"
             },
             {
@@ -154,11 +114,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الظهران",
                 startDate: new Date("2026-02-12"),
-                endDate: new Date("2026-02-16"),
-                daysCount: 4,
-                diagnosis: "عملية جراحية في الركبة",
-                doctorName: "د. سلطان القرني",
-                hospitalName: "مستشفى جونز هوبكنز أرامكو",
                 status: "approved"
             },
             {
@@ -171,11 +126,6 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "جدة",
                 startDate: new Date("2026-02-25"),
-                endDate: new Date("2026-02-27"),
-                daysCount: 2,
-                diagnosis: "إرهاق عام",
-                doctorName: "د. لينا الخضيري",
-                hospitalName: "مستشفى الملك فهد",
                 status: "pending"
             }
         ];

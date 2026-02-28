@@ -37,12 +37,8 @@ module.exports = async function handler(req, res) {
             startDate: new Date(startDate)
         };
 
-        if (endDate) data.endDate = new Date(endDate);
-        if (daysCount) data.daysCount = parseInt(daysCount);
-        if (diagnosis) data.diagnosis = diagnosis;
-        if (doctorName) data.doctorName = doctorName;
-        if (hospitalName) data.hospitalName = hospitalName;
-        if (notes) data.notes = notes;
+        // Add optional fields if provided
+        // Removed endDate, daysCount, diagnosis, doctorName, hospitalName, notes as they are missing in DB
 
         const newLeave = await prisma.sickLeave.create({ data });
 

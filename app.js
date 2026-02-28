@@ -612,7 +612,8 @@ window.submitDirectLeave = async (e) => {
         startDate: document.getElementById('dl-startDate').value
     };
 
-    // Optional fields
+    // Optional fields - Commented out as they are missing in DB
+    /*
     const endDate = document.getElementById('dl-endDate').value;
     const daysCount = document.getElementById('dl-daysCount').value;
     const doctorName = document.getElementById('dl-doctorName').value;
@@ -626,6 +627,7 @@ window.submitDirectLeave = async (e) => {
     if (hospitalName) formData.hospitalName = hospitalName;
     if (diagnosis) formData.diagnosis = diagnosis;
     if (notes) formData.notes = notes;
+    */
 
     showToast('⏳ جاري إضافة الإجازة...');
 

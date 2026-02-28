@@ -19,12 +19,12 @@ model SickLeave {
   nationality     String
   city            String
   startDate       DateTime
-  endDate         DateTime?
-  daysCount       Int?
-  diagnosis       String?
-  doctorName      String?
-  hospitalName    String?
-  notes           String?
+  // endDate         DateTime?
+  // daysCount       Int?
+  // diagnosis       String?
+  // doctorName      String?
+  // hospitalName    String?
+  // notes           String?
   status          String   @default("pending")
   createdAt       DateTime @default(now())
 
