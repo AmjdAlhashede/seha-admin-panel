@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const addLeaveDirect = require('./_lib/handlers/add-leave-direct');
 const getLeaves = require('./_lib/handlers/get-leaves');
 const updateStatus = require('./_lib/handlers/update-status');
@@ -12,6 +13,9 @@ const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the parent directory (project root)
+app.use(express.static(path.join(__dirname, '..')));
 
 // API Routes for Admin Panel
 app.post('/api/admin-login', async (req, res) => {

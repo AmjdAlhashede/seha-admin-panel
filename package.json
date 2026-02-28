@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Seha Admin Panel - Standalone",
   "scripts": {
-    "dev": "npx serve .",
+    "dev": "node api/index.js",
     "server": "node api/index.js",
     "prisma:generate": "prisma generate"
   },
