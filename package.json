@@ -1,0 +1,9 @@
+{
+  "name": "seha-admin-panel",
+  "version": "1.0.0",
+  "description": "Seha Admin Panel - Standalone",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'"
+  }
+}

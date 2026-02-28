@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | منصة صحة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <i class="fas fa-heartbeat"></i>
+            <h2>منصة صحة</h2>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-item active" onclick="navTo('dashboard', this)">
+                <i class="fas fa-grid-2"></i> لوحة المعلومات
+            </div>
+            <div class="nav-item" onclick="navTo('leaves', this)">
+                <i class="fas fa-file-medical-alt"></i> طلبات الإجازة
+            </div>
+            <div class="nav-item" onclick="navTo('staff', this)">
+                <i class="fas fa-user-doctor"></i> الطاقم الطبي
+            </div>
+            <div class="nav-item" onclick="navTo('settings', this)">
+                <i class="fas fa-cog"></i> الإعدادات
+            </div>
+        </nav>
+        <div style="padding: 20px; border-top: 1px solid var(--border);">
+            <div class="nav-item" onclick="logout()" style="color: #ef4444; margin-top:0;">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <h2 id="page-title" style="font-weight:700; font-size:1.2rem;">نظرة عامة</h2>
+            </div>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <button class="toggle-btn" style="display:block; font-size:1.2rem;" title="تنبيهات">
+                    <i class="far fa-bell"></i>
+                </button>
+                <button onclick="logout()" style="background:none; border:none; font-size:1.2rem; color:var(--text-muted); cursor:pointer;" title="خروج">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff" style="width:40px; height:40px; border-radius:50%; border:2px solid var(--border);">
+            </div>
+        </header>
+
+        <div style="padding: 30px;" id="main-container">
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard" class="page-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <h3 style="color:#64748b; font-size:0.9rem;">قيد الانتظار</h3>
+                            <h2 class="val-pending" style="font-size:2rem; font-weight:800; color:#1e293b;">--</h2>
+                        </div>
+                        <div class="stat-icon bg-blue"><i class="fas fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <h3 style="color:#64748b; font-size:0.9rem;">تمت الموافقة</h3>
+                            <h2 class="val-approved" style="font-size:2rem; font-weight:800; color:#1e293b;">--</h2>
+                        </div>
+                        <div class="stat-icon bg-green"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <h3 style="color:#64748b; font-size:0.9rem;">مرفوضة</h3>
+                            <h2 class="val-rejected" style="font-size:2rem; font-weight:800; color:#1e293b;">--</h2>
+                        </div>
+                        <div class="stat-icon bg-red"><i class="fas fa-times"></i></div>
+                    </div>
+                </div>
+
+                <!-- Seed Data Section -->
+                <div class="card-container" style="margin-bottom:24px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:2px dashed #38bdf8;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                        <div>
+                            <h3 style="margin-bottom:6px; color:#0369a1;">
+                                <i class="fas fa-database" style="margin-left:8px;"></i>تعبئة قاعدة البيانات
+                            </h3>
+                            <p style="color:#64748b; font-size:0.9rem; margin:0;">أضف 10 سجلات تجريبية واقعية لإجازات مرضية في قاعدة البيانات للتجربة</p>
+                        </div>
+                        <button id="seed-btn" onclick="seedDatabase()" style="background:linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color:white; border:none; padding:12px 28px; border-radius:12px; cursor:pointer; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:10px; transition:all 0.3s; box-shadow:0 4px 12px rgba(14,165,233,0.3);">
+                            <i class="fas fa-cloud-arrow-down"></i> شحن البيانات
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="section-header">
+                        <h3>أحدث 5 طلبات</h3>
+                        <button onclick="navTo('leaves')" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer;">
+                            عرض الكل <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>الاسم (عربي)</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-table-body">
+                                <tr>
+                                    <td colspan="4" style="text-align:center; padding:20px;">جاري التحميل...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEAVES SECTION -->
+            <div id="leaves" class="page-section">
+                <div class="card-container">
+                    <div class="section-header">
+                        <h3>سجل الإجازات المرضية</h3>
+                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                            <button onclick="openAddLeaveModal()" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;" title="إضافة إجازة مباشرة">
+                                <i class="fas fa-plus-circle"></i> إضافة إجازة
+                            </button>
+                            <button onclick="refreshData()" style="background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;" title="تحديث البيانات">
+                                <i class="fas fa-sync-alt"></i> تحديث
+                            </button>
+                            <input type="text" id="searchInput" placeholder="بحث بالاسم أو رقم الهوية..." style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:30px; outline:none; width:250px;">
+                        </div>
+                    </div>
+                    <!-- Filter Buttons -->
+                    <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+                        <button onclick="filterByStatus('all')" class="filter-btn active" data-filter="all" style="padding:8px 18px; border-radius:20px; border:2px solid var(--primary); background:var(--primary); color:white; font-weight:600; cursor:pointer; transition:0.2s;">
+                            الكل
+                        </button>
+                        <button onclick="filterByStatus('pending')" class="filter-btn" data-filter="pending" style="padding:8px 18px; border-radius:20px; border:2px solid #ea580c; background:transparent; color:#ea580c; font-weight:600; cursor:pointer; transition:0.2s;">
+                            <i class="fas fa-clock"></i> قيد المراجعة
+                        </button>
+                        <button onclick="filterByStatus('approved')" class="filter-btn" data-filter="approved" style="padding:8px 18px; border-radius:20px; border:2px solid #16a34a; background:transparent; color:#16a34a; font-weight:600; cursor:pointer; transition:0.2s;">
+                            <i class="fas fa-check"></i> مقبولة
+                        </button>
+                        <button onclick="filterByStatus('rejected')" class="filter-btn" data-filter="rejected" style="padding:8px 18px; border-radius:20px; border:2px solid #dc2626; background:transparent; color:#dc2626; font-weight:600; cursor:pointer; transition:0.2s;">
+                            <i class="fas fa-times"></i> مرفوضة
+                        </button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>الاسم (عربي)</th>
+                                    <th>الاسم (إنجليزي)</th>
+                                    <th>رقم الهوية</th>
+                                    <th>الوظيفة</th>
+                                    <th>جهة العمل</th>
+                                    <th>المدينة</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaves-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAFF SECTION -->
+            <div id="staff" class="page-section">
+                <div class="staff-grid">
+                    <div class="add-staff-card" onclick="openModal()">
+                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:15px; color:#64748b;">
+                            <i class="fas fa-plus fa-lg"></i>
+                        </div>
+                        <h3 style="color:#475569;">إضافة موظف جديد</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS SECTION -->
+            <div id="settings" class="page-section">
+                <div class="card-container" style="max-width:600px;">
+                    <h3 style="margin-bottom:20px;">إعدادات النظام</h3>
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; margin-bottom:8px; font-weight:600;">اسم النظام</label>
+                        <input type="text" value="منصة صحة الرقمية" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; margin-bottom:8px; font-weight:600;">البريد الإلكتروني للدعم</label>
+                        <input type="text" value="support@seha.sa" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                    </div>
+                    <button style="background:var(--primary); color:white; padding:12px 24px; border:none; border-radius:8px; font-weight:700; width:100%; cursor:pointer;" onclick="showToast('تم حفظ الإعدادات بنجاح')">
+                        حفظ التغييرات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="staffModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3>إضافة عضو جديد</h3>
+                <button onclick="closeModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <input type="text" placeholder="الاسم الكامل" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:15px;">
+            <select style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:15px;">
+                <option>طبيب عام</option>
+                <option>ممرض</option>
+                <option>إداري</option>
+            </select>
+            <button onclick="addStaff()" style="width:100%; background:var(--primary); color:white; padding:12px; border:none; border-radius:8px; font-weight:700; cursor:pointer;">
+                إضافة
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="detailsModal">
+        <div class="modal-content" style="max-width:600px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3>تفاصيل الطلب</h3>
+                <button onclick="closeDetailsModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="detailsContent" style="line-height:2;"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="addLeaveModal">
+        <div class="modal-content" style="max-width:700px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3><i class="fas fa-plus-circle" style="color:var(--primary);"></i> إضافة إجازة مباشرة</h3>
+                <button onclick="closeAddLeaveModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="direct-leave-form" onsubmit="submitDirectLeave(event)">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (عربي) *</label>
+                        <input type="text" id="dl-nameAr" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="أحمد محمد">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (إنجليزي) *</label>
+                        <input type="text" id="dl-nameEn" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="Ahmed Mohammed">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">رقم الهوية *</label>
+                        <input type="text" id="dl-idNumber" required maxlength="10" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="10xxxxxxxx">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ الميلاد *</label>
+                        <input type="date" id="dl-birthDate" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الوظيفة *</label>
+                        <input type="text" id="dl-job" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="المسمى الوظيفي">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">جهة العمل *</label>
+                        <input type="text" id="dl-employer" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="جهة العمل">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الجنسية *</label>
+                        <select id="dl-nationality" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                            <option value="">-- اختر --</option>
+                            <option value="سعودي">سعودي</option>
+                            <option value="مصري">مصري</option>
+                            <option value="سوري">سوري</option>
+                            <option value="يمني">يمني</option>
+                            <option value="أردني">أردني</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المدينة *</label>
+                        <input type="text" id="dl-city" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="المدينة">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ البدء *</label>
+                        <input type="date" id="dl-startDate" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ النهاية</label>
+                        <input type="date" id="dl-endDate" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">عدد الأيام</label>
+                        <input type="number" id="dl-daysCount" min="1" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="3">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">اسم الطبيب</label>
+                        <input type="text" id="dl-doctorName" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="د. محمد">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المستشفى</label>
+                        <input type="text" id="dl-hospitalName" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="اسم المستشفى">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">التشخيص</label>
+                        <input type="text" id="dl-diagnosis" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="التشخيص">
+                    </div>
+                </div>
+                <div style="margin-top:15px;">
+                    <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">ملاحظات</label>
+                    <textarea id="dl-notes" rows="2" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px; resize:vertical;" placeholder="ملاحظات إضافية..."></textarea>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="submit" style="flex:1; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; font-size:1rem;">
+                        <i class="fas fa-check-circle"></i> إضافة وموافقة مباشرة
+                    </button>
+                    <button type="button" onclick="closeAddLeaveModal()" style="padding:14px 24px; background:#f1f5f9; color:#475569; border:none; border-radius:12px; font-weight:700; cursor:pointer;">
+                        إلغاء
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color:#4ade80;"></i>
+        <span id="toastMsg">تمت العملية بنجاح</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="generate-pdf.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
