@@ -12,13 +12,20 @@ app.use(express.json());
 // In Vercel, files in the root are accessible relative to /api/index.js
 app.use(express.static(path.join(__dirname, '..')));
 
+// Import handlers statically for Vercel bundling
+const adminLogin = require('./_lib/handlers/admin-login');
+const getLeaves = require('./_lib/handlers/get-leaves');
+const updateStatus = require('./_lib/handlers/update-status');
+const deleteLeave = require('./_lib/handlers/delete-leave');
+const addLeaveDirect = require('./_lib/handlers/add-leave-direct');
+const seedData = require('./_lib/handlers/seed-data');
+
 // Error-safe handler wrapper
-const safeHandler = (handlerPath) => async (req, res) => {
+const safeInvoke = (handler) => async (req, res) => {
     try {
-        const handler = require(handlerPath);
         await handler(req, res);
     } catch (error) {
-        console.error(`Error in handler ${handlerPath}:`, error);
+        console.error('API Error:', error);
         res.status(500).json({
             error: 'Internal Server Error',
             message: error.message,
@@ -27,13 +34,13 @@ const safeHandler = (handlerPath) => async (req, res) => {
     }
 };
 
-// API Routes for Admin Panel - Lazy Loaded
-app.post('/api/admin-login', safeHandler('./_lib/handlers/admin-login'));
-app.get('/api/get-leaves', safeHandler('./_lib/handlers/get-leaves'));
-app.patch('/api/update-status', safeHandler('./_lib/handlers/update-status'));
-app.delete('/api/delete-leave', safeHandler('./_lib/handlers/delete-leave'));
-app.post('/api/add-leave-direct', safeHandler('./_lib/handlers/add-leave-direct'));
-app.post('/api/seed-data', safeHandler('./_lib/handlers/seed-data'));
+// API Routes for Admin Panel
+app.post('/api/admin-login', safeInvoke(adminLogin));
+app.get('/api/get-leaves', safeInvoke(getLeaves));
+app.patch('/api/update-status', safeInvoke(updateStatus));
+app.delete('/api/delete-leave', safeInvoke(deleteLeave));
+app.post('/api/add-leave-direct', safeInvoke(addLeaveDirect));
+app.post('/api/seed-data', safeInvoke(seedData));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
