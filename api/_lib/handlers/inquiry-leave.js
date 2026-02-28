@@ -37,9 +37,9 @@ module.exports = async function handler(req, res) {
             "Patient Name": leave.patientNameAr, // Some pages use spaces
             SickLeaveDate: leave.createdAt.toISOString().split("T")[0],
             From: leave.startDate.toISOString().split("T")[0],
-            To: "", // leave.endDate missing in DB
-            Duration: 0, // leave.daysCount missing in DB
-            "Doctor NAME": "", // leave.doctorName missing in DB
+            To: leave.endDate ? leave.endDate.toISOString().split("T")[0] : "",
+            Duration: leave.daysCount || 0,
+            "Doctor NAME": leave.doctorName || "",
             JobTitle: leave.job || "",
             Relationship: null, // Default
             FullName: leave.patientNameAr, // For Mlenquiry
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
             ApplicantDOB: leave.birthDate.toISOString().split("T")[0],
             ApplicantPhone: "05XXXXXXXX",
             TestDate: leave.startDate.toISOString().split("T")[0],
-            Justifications: "" // leave.notes missing in DB
+            Justifications: leave.notes || ""
         };
 
         return res.status(200).json({

@@ -363,6 +363,15 @@
                             placeholder="3">
                     </div>
                     <div>
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">نوع الطلب
+                            (الرمز)</label>
+                        <select id="dl-servicePrefix"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                            <option value="PSL">إجازة قطاع خاص (PSL)</option>
+                            <option value="GSL">إجازة قطاع حكومي (GSL)</option>
+                        </select>
+                    </div>
+                    <div>
                         <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">اسم
                             الطبيب</label>
                         <input type="text" id="dl-doctorName"
@@ -376,7 +385,7 @@
                             style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
                             placeholder="اسم المستشفى">
                     </div>
-                    <div>
+                    <div style="grid-column: 1 / -1;">
                         <label
                             style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">التشخيص</label>
                         <input type="text" id="dl-diagnosis"

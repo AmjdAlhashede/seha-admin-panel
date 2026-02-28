@@ -18,6 +18,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الرياض",
                 startDate: new Date("2026-02-20"),
+                endDate: new Date("2026-02-23"),
+                daysCount: 3,
+                diagnosis: "إجهاد عام",
+                doctorName: "د. خالد السبيعي",
+                hospitalName: "مستشفى الحبيب",
+                notes: "يحتاج راحة تامة",
                 status: "pending"
             },
             {
@@ -30,6 +36,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "جدة",
                 startDate: new Date("2026-02-18"),
+                endDate: new Date("2026-02-20"),
+                daysCount: 2,
+                diagnosis: "إنفلونزا حادة",
+                doctorName: "د. هدى العتيبي",
+                hospitalName: "مستشفى الملك فهد",
+                notes: "مراجعة بعد يومين",
                 status: "approved"
             },
             {
@@ -42,6 +54,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الدمام",
                 startDate: new Date("2026-02-15"),
+                endDate: new Date("2026-02-16"),
+                daysCount: 1,
+                diagnosis: "صداع نصفي",
+                doctorName: "د. فهد الدوسري",
+                hospitalName: "مستشفى البركة",
+                notes: "",
                 status: "approved"
             },
             {
@@ -54,6 +72,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "مكة المكرمة",
                 startDate: new Date("2026-02-22"),
+                endDate: new Date("2026-02-25"),
+                daysCount: 3,
+                diagnosis: "التهاب لوزتين",
+                doctorName: "د. سارة الغامدي",
+                hospitalName: "مستشفى النور",
+                notes: "يمنع الكلام الكثير",
                 status: "pending"
             },
             {
@@ -66,6 +90,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الرياض",
                 startDate: new Date("2026-02-10"),
+                endDate: new Date("2026-02-12"),
+                daysCount: 2,
+                diagnosis: "نزلة معوية",
+                doctorName: "د. علي القحطاني",
+                hospitalName: "مركز الرائد",
+                notes: "",
                 status: "rejected"
             },
             {
@@ -78,6 +108,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "الطائف",
                 startDate: new Date("2026-02-24"),
+                endDate: new Date("2026-02-26"),
+                daysCount: 2,
+                diagnosis: "إرهاق عمل",
+                doctorName: "د. منى علي",
+                hospitalName: "مستشفى الهدا",
+                notes: "",
                 status: "pending"
             },
             {
@@ -90,6 +126,12 @@ module.exports = async function handler(req, res) {
                 nationality: "مصري",
                 city: "الرياض",
                 startDate: new Date("2026-02-19"),
+                endDate: new Date("2026-02-24"),
+                daysCount: 5,
+                diagnosis: "ألم في الظهر",
+                doctorName: "د. سامي الجابر",
+                hospitalName: "مستشفى رعاية",
+                notes: "يحتاج علاج طبيعي",
                 status: "approved"
             },
             {
@@ -102,6 +144,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودية",
                 city: "الرياض",
                 startDate: new Date("2026-02-23"),
+                endDate: new Date("2026-02-25"),
+                daysCount: 2,
+                diagnosis: "ارتفاع حرارة",
+                doctorName: "د. ريم أحمد",
+                hospitalName: "مستشفى الشميسي",
+                notes: "",
                 status: "pending"
             },
             {
@@ -114,6 +162,12 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "الظهران",
                 startDate: new Date("2026-02-12"),
+                endDate: new Date("2026-02-15"),
+                daysCount: 3,
+                diagnosis: "التهاب عصب",
+                doctorName: "د. محمد القحطاني",
+                hospitalName: "مركز أرامكو الطبي",
+                notes: "متابعة أسبوعية",
                 status: "approved"
             },
             {
@@ -126,21 +180,28 @@ module.exports = async function handler(req, res) {
                 nationality: "سعودي",
                 city: "جدة",
                 startDate: new Date("2026-02-25"),
+                endDate: new Date("2026-02-28"),
+                daysCount: 3,
+                diagnosis: "كدمة بالقدم",
+                doctorName: "د. وليد الفراج",
+                hospitalName: "مجمع تداوي",
+                notes: "يحظر ممارسة الرياضة",
                 status: "pending"
             }
         ];
 
         // Generate service codes
-        const generateServiceCode = (id, date) => {
+        const generateServiceCode = (id, date, employer = "") => {
+            const prefix = employer.includes('وزارة') || employer.includes('مستشفى الملك') || employer.includes('جامعة') ? 'GSL' : 'PSL';
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const randomLetters = Array.from({ length: 3 }, () =>
+            const randomLetters = Array.from({ length: 2 }, () =>
                 letters.charAt(Math.floor(Math.random() * letters.length))
             ).join('');
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             const paddedId = String(id).padStart(4, '0');
-            return `${randomLetters}${year}${month}${day}${paddedId}`;
+            return `${prefix}${year}${month}${day}${randomLetters}${paddedId}`;
         };
 
         let insertedCount = 0;
@@ -155,9 +216,9 @@ module.exports = async function handler(req, res) {
 
             let serviceCode;
             if (insertedCount === 0) {
-                serviceCode = "SL-123456789";
+                serviceCode = "PSL20260220SL1234";
             } else {
-                serviceCode = generateServiceCode(newLeave.id, item.startDate);
+                serviceCode = generateServiceCode(newLeave.id, item.startDate, item.employer);
             }
 
             await prisma.sickLeave.update({

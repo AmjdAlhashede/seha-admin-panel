@@ -463,8 +463,24 @@ window.viewDetails = (leaveId) => {
                     <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${startDate}</p>
                 </div>
                 <div>
-                    <strong style="color:#64748b; font-size:0.85rem;">تاريخ التقديم:</strong>
-                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${createdDate}</p>
+                    <strong style="color:#64748b; font-size:0.85rem;">تاريخ النهاية:</strong>
+                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.endDate ? new Date(leave.endDate).toLocaleDateString('ar-SA') : '-'}</p>
+                </div>
+                <div>
+                    <strong style="color:#64748b; font-size:0.85rem;">مدة الإجازة:</strong>
+                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.daysCount ? leave.daysCount + ' أيام' : '-'}</p>
+                </div>
+                <div>
+                    <strong style="color:#64748b; font-size:0.85rem;">اسم الطبيب:</strong>
+                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.doctorName || '-'}</p>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <strong style="color:#64748b; font-size:0.85rem;">التشخيص:</strong>
+                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.diagnosis || '-'}</p>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <strong style="color:#64748b; font-size:0.85rem;">ملاحظات:</strong>
+                    <p style="margin:5px 0 0 0; color:#64748b; font-size:0.9rem;">${leave.notes || 'لا يوجد ملاحظات'}</p>
                 </div>
                 <div style="grid-column:1/-1;">
                     <strong style="color:#64748b; font-size:0.85rem;">الحالة:</strong>
@@ -609,25 +625,15 @@ window.submitDirectLeave = async (e) => {
         employer: document.getElementById('dl-employer').value,
         nationality: document.getElementById('dl-nationality').value,
         city: document.getElementById('dl-city').value,
-        startDate: document.getElementById('dl-startDate').value
+        startDate: document.getElementById('dl-startDate').value,
+        endDate: document.getElementById('dl-endDate').value,
+        daysCount: document.getElementById('dl-daysCount').value,
+        servicePrefix: document.getElementById('dl-servicePrefix').value,
+        doctorName: document.getElementById('dl-doctorName').value,
+        hospitalName: document.getElementById('dl-hospitalName').value,
+        diagnosis: document.getElementById('dl-diagnosis').value,
+        notes: document.getElementById('dl-notes').value
     };
-
-    // Optional fields - Commented out as they are missing in DB
-    /*
-    const endDate = document.getElementById('dl-endDate').value;
-    const daysCount = document.getElementById('dl-daysCount').value;
-    const doctorName = document.getElementById('dl-doctorName').value;
-    const hospitalName = document.getElementById('dl-hospitalName').value;
-    const diagnosis = document.getElementById('dl-diagnosis').value;
-    const notes = document.getElementById('dl-notes').value;
-
-    if (endDate) formData.endDate = endDate;
-    if (daysCount) formData.daysCount = daysCount;
-    if (doctorName) formData.doctorName = doctorName;
-    if (hospitalName) formData.hospitalName = hospitalName;
-    if (diagnosis) formData.diagnosis = diagnosis;
-    if (notes) formData.notes = notes;
-    */
 
     showToast('⏳ جاري إضافة الإجازة...');
 

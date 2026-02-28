@@ -21,7 +21,8 @@ module.exports = async function handler(req, res) {
             diagnosis,
             doctorName,
             hospitalName,
-            notes
+            notes,
+            servicePrefix // PSL or GSL
         } = req.body;
 
         const data = {
@@ -34,15 +35,19 @@ module.exports = async function handler(req, res) {
             employer,
             nationality,
             city,
-            startDate: new Date(startDate)
+            startDate: new Date(startDate),
+            endDate: endDate ? new Date(endDate) : null,
+            daysCount: daysCount ? parseInt(daysCount) : null,
+            diagnosis: diagnosis || null,
+            doctorName: doctorName || null,
+            hospitalName: hospitalName || null,
+            notes: notes || null
         };
-
-        // Add optional fields if provided
-        // Removed endDate, daysCount, diagnosis, doctorName, hospitalName, notes as they are missing in DB
 
         const newLeave = await prisma.sickLeave.create({ data });
 
-        const serviceCode = generateServiceCode(newLeave.id, new Date(startDate));
+        const prefix = servicePrefix || (employer && employer.includes('حكومي') ? 'GSL' : 'PSL');
+        const serviceCode = generateServiceCode(newLeave.id, new Date(startDate), prefix);
 
         const updatedLeave = await prisma.sickLeave.update({
             where: { id: newLeave.id },
@@ -56,9 +61,9 @@ module.exports = async function handler(req, res) {
     }
 }
 
-function generateServiceCode(id, date) {
+function generateServiceCode(id, date, prefix = 'PSL') {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const randomLetters = Array.from({ length: 3 }, () =>
+    const randomLetters = Array.from({ length: 2 }, () =>
         letters.charAt(Math.floor(Math.random() * letters.length))
     ).join('');
 
@@ -67,5 +72,5 @@ function generateServiceCode(id, date) {
     const day = String(date.getDate()).padStart(2, '0');
     const paddedId = String(id).padStart(4, '0');
 
-    return `${randomLetters}${year}${month}${day}${paddedId}`;
+    return `${prefix}${year}${month}${day}${randomLetters}${paddedId}`;
 }
