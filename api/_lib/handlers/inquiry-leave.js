@@ -6,9 +6,8 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        // Support both new and legacy query parameters
         const serviceCode = req.query.serviceCode || req.query.NormalizedServiceCode || req.query.ServiceCode;
-        const idNumber = req.query.idNumber || req.query.PatientId || req.query.IDNumber || req.query.NationalOrIqamaID;
+        const idNumber = req.query.idNumber || req.query.PatientId || req.query.IDNumber || req.query.NationalOrIqamaID || req.query.IdValue;
 
         if (!serviceCode || !idNumber) {
             return res.status(400).json({

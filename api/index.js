@@ -52,16 +52,23 @@ app.post('/api/seed-data', safeInvoke(seedData));
 // API Routes for Portal (Centralized)
 app.post('/api/add-leave', safeInvoke(addLeave));
 
-// Unified Inquiry Route for multiple legacy paths
-const unifiedInquiry = safeInvoke(inquiryLeave);
-app.get('/api/inquiry-leave', unifiedInquiry);
-app.get('/api/sick-leave-details', unifiedInquiry);
-app.get('/api/preentry-medical-report', unifiedInquiry);
-app.get('/api/amanat-health-certificate-inquiry', unifiedInquiry);
-app.get('/api/healthy-marriage-certificate', unifiedInquiry);
-app.get('/api/ayenati-details', unifiedInquiry);
-app.get('/api/driving-licenses-medical-report-inquiry', unifiedInquiry);
-app.get('/api/covid-recovery-report', unifiedInquiry);
+// Dummy Auth handler to stop 404 logs for stray frontend calls
+app.get('/api/Account/GetJWTUserToken', (req, res) => res.status(200).json({ ErrorCode: 0, Data: { Token: "ignore" } }));
+app.post('/api/Account/Logout', (req, res) => res.status(200).json({ success: true }));
+
+// New Independent Prefix for Public Portal (Decoupled)
+app.get('/verify/report', unifiedInquiry);
+app.get('/verify/sick-leave', unifiedInquiry);
+app.get('/verify/sick-leave-details', unifiedInquiry);
+app.get('/verify/covid-recovery-report', unifiedInquiry);
+app.get('/verify/preentry-medical-report', unifiedInquiry);
+app.get('/verify/amanat-health-certificate-inquiry', unifiedInquiry);
+app.get('/verify/healthy-marriage-certificate', unifiedInquiry);
+app.get('/verify/ayenati-details', unifiedInquiry);
+app.get('/verify/driving-licenses-medical-report-inquiry', unifiedInquiry);
+app.get('/verify/search-sick-leave', safeInvoke(searchSickLeave));
+app.get('/verify/GetByServiceCode', safeInvoke(GetByServiceCode));
+app.get('/verify/get-sick-leave-by-code-and-id', safeInvoke(getByCodeAndId));
 
 // Mock PDF routes (points to same handler for now to at least return some data if called)
 app.get('/api/pdf/*', (req, res) => {
