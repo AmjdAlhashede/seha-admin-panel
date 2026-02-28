@@ -5,11 +5,22 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors({
-    origin: '*', // Allow all origins for public inquiries
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'apikey']
-}));
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, apikey, Accept');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    next();
+});
 app.use(express.json());
 
 // Serve static files from the parent directory
@@ -62,6 +73,12 @@ app.post('/api/Account/Logout', (req, res) => res.status(200).json({ success: tr
 
 // Unified Inquiry Route for multiple legacy paths
 const unifiedInquiry = safeInvoke(inquiryLeave);
+
+// Backward compatibility for legacy /api/ paths
+app.get('/api/inquiry-leave', unifiedInquiry);
+app.get('/api/sick-leave-details', unifiedInquiry);
+app.get('/api/covid-recovery-report', unifiedInquiry);
+app.get('/api/search-sick-leave', safeInvoke(searchSickLeave));
 
 // New Independent Prefix for Public Portal (Decoupled)
 app.get('/verify/report', unifiedInquiry);
