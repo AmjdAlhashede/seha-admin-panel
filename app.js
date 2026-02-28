@@ -448,10 +448,6 @@ window.viewDetails = (leaveId) => {
                     <strong style="color:#64748b; font-size:0.85rem;">الجنسية:</strong>
                     <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.nationality || '-'}</p>
                 </div>
-                <div>
-                    <strong style="color:#64748b; font-size:0.85rem;">المدينة:</strong>
-                    <p style="margin:5px 0 0 0; color:#0f172a; font-weight:600;">${leave.city || '-'}</p>
-                </div>
             </div>
         </div>
 
@@ -620,6 +616,11 @@ window.deleteLeave = async (id) => {
 }
 
 // --- ADD LEAVE DIRECT MODAL ---
+window.toggleNationality = (val) => {
+    const customInput = document.getElementById('dl-customNationality');
+    if (customInput) customInput.style.display = (val === 'أخرى') ? 'block' : 'none';
+}
+
 window.openAddLeaveModal = () => {
     const m = document.getElementById('addLeaveModal');
     if (m) m.classList.add('active');
@@ -628,7 +629,10 @@ window.openAddLeaveModal = () => {
 window.closeAddLeaveModal = () => {
     const m = document.getElementById('addLeaveModal');
     if (m) m.classList.remove('active');
-    document.getElementById('direct-leave-form')?.reset();
+    const form = document.getElementById('direct-leave-form');
+    if (form) form.reset();
+    const customInput = document.getElementById('dl-customNationality');
+    if (customInput) customInput.style.display = 'none';
 }
 
 window.submitDirectLeave = async (e) => {
@@ -640,8 +644,9 @@ window.submitDirectLeave = async (e) => {
         idNumber: document.getElementById('dl-idNumber').value,
         job: document.getElementById('dl-job').value,
         employer: document.getElementById('dl-employer').value,
-        nationality: document.getElementById('dl-nationality').value,
-        city: document.getElementById('dl-city').value,
+        nationality: document.getElementById('dl-nationality').value === 'أخرى'
+            ? document.getElementById('dl-customNationality').value
+            : document.getElementById('dl-nationality').value,
         startDate: document.getElementById('dl-startDate').value,
         endDate: document.getElementById('dl-endDate').value,
         daysCount: document.getElementById('dl-daysCount').value,

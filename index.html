@@ -329,8 +329,8 @@
                     <div>
                         <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الجنسية
                             *</label>
-                        <select id="dl-nationality" required
-                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <select id="dl-nationality" required onchange="window.toggleNationality(this.value)"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:10px;">
                             <option value="">-- اختر --</option>
                             <option value="سعودي">سعودي</option>
                             <option value="مصري">مصري</option>
@@ -339,13 +339,8 @@
                             <option value="أردني">أردني</option>
                             <option value="أخرى">أخرى</option>
                         </select>
-                    </div>
-                    <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المدينة
-                            *</label>
-                        <input type="text" id="dl-city" required
-                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
-                            placeholder="المدينة">
+                        <input type="text" id="dl-customNationality" placeholder="أدخل الجنسية..."
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px; display:none;">
                     </div>
                     <div>
                         <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ البدء

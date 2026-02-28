@@ -13,11 +13,11 @@ model SickLeave {
   patientNameEn   String
   patientNameAr   String
   idNumber        String
-  birthDate       DateTime
+  birthDate       DateTime?
   job             String
   employer        String
   nationality     String
-  city            String
+  city            String?
   startDate       DateTime
   endDate         DateTime?
   daysCount       Int?
