@@ -1,6 +1,9 @@
 {
   "name": "seha-admin-panel",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "description": "Seha Admin Panel - Standalone",
   "scripts": {
     "dev": "node api/index.js",

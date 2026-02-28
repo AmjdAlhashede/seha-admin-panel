@@ -1,12 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const addLeaveDirect = require('./_lib/handlers/add-leave-direct');
-const getLeaves = require('./_lib/handlers/get-leaves');
-const updateStatus = require('./_lib/handlers/update-status');
-const deleteLeave = require('./_lib/handlers/delete-leave');
-const adminLogin = require('./_lib/handlers/admin-login');
-const seedData = require('./_lib/handlers/seed-data');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -14,35 +8,34 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the parent directory (project root)
+// Serve static files from the parent directory
+// In Vercel, files in the root are accessible relative to /api/index.js
 app.use(express.static(path.join(__dirname, '..')));
 
-// API Routes for Admin Panel
-app.post('/api/admin-login', async (req, res) => {
-    await adminLogin(req, res);
-});
+// Error-safe handler wrapper
+const safeHandler = (handlerPath) => async (req, res) => {
+    try {
+        const handler = require(handlerPath);
+        await handler(req, res);
+    } catch (error) {
+        console.error(`Error in handler ${handlerPath}:`, error);
+        res.status(500).json({
+            error: 'Internal Server Error',
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+};
 
-app.get('/api/get-leaves', async (req, res) => {
-    await getLeaves(req, res);
-});
+// API Routes for Admin Panel - Lazy Loaded
+app.post('/api/admin-login', safeHandler('./_lib/handlers/admin-login'));
+app.get('/api/get-leaves', safeHandler('./_lib/handlers/get-leaves'));
+app.patch('/api/update-status', safeHandler('./_lib/handlers/update-status'));
+app.delete('/api/delete-leave', safeHandler('./_lib/handlers/delete-leave'));
+app.post('/api/add-leave-direct', safeHandler('./_lib/handlers/add-leave-direct'));
+app.post('/api/seed-data', safeHandler('./_lib/handlers/seed-data'));
 
-app.patch('/api/update-status', async (req, res) => {
-    await updateStatus(req, res);
-});
-
-app.delete('/api/delete-leave', async (req, res) => {
-    await deleteLeave(req, res);
-});
-
-app.post('/api/add-leave-direct', async (req, res) => {
-    await addLeaveDirect(req, res);
-});
-
-app.post('/api/seed-data', async (req, res) => {
-    await seedData(req, res);
-});
-
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
 // Catch-all for API 404
 app.use('/api/*', (req, res) => {
