@@ -60,6 +60,9 @@ app.post('/api/add-leave', safeInvoke(addLeave));
 app.get('/api/Account/GetJWTUserToken', (req, res) => res.status(200).json({ ErrorCode: 0, Data: { Token: "ignore" } }));
 app.post('/api/Account/Logout', (req, res) => res.status(200).json({ success: true }));
 
+// Unified Inquiry Route for multiple legacy paths
+const unifiedInquiry = safeInvoke(inquiryLeave);
+
 // New Independent Prefix for Public Portal (Decoupled)
 app.get('/verify/report', unifiedInquiry);
 app.get('/verify/sick-leave', unifiedInquiry);
