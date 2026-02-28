@@ -30,3 +30,13 @@ model SickLeave {
 
   @@map("sick_leaves")
 }
+
+model AdminAccount {
+  id                Int      @id @default(autoincrement())
+  username          String   @unique @default("admin")
+  password          String   @default("admin123")
+  rememberMeDefault Boolean  @default(true) // Site-wide default for persistence
+  updatedAt         DateTime @updatedAt
+
+  @@map("admin_accounts")
+}
