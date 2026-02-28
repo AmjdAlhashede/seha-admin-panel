@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="overlay" onclick="toggleSidebar()"></div>
 
@@ -49,10 +51,13 @@
                 <button class="toggle-btn" style="display:block; font-size:1.2rem;" title="تنبيهات">
                     <i class="far fa-bell"></i>
                 </button>
-                <button onclick="logout()" style="background:none; border:none; font-size:1.2rem; color:var(--text-muted); cursor:pointer;" title="خروج">
+                <button onclick="logout()"
+                    style="background:none; border:none; font-size:1.2rem; color:var(--text-muted); cursor:pointer;"
+                    title="خروج">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
-                <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff" style="width:40px; height:40px; border-radius:50%; border:2px solid var(--border);">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff"
+                    style="width:40px; height:40px; border-radius:50%; border:2px solid var(--border);">
             </div>
         </header>
 
@@ -84,15 +89,19 @@
                 </div>
 
                 <!-- Seed Data Section -->
-                <div class="card-container" style="margin-bottom:24px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:2px dashed #38bdf8;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                <div class="card-container"
+                    style="margin-bottom:24px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:2px dashed #38bdf8;">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
                         <div>
                             <h3 style="margin-bottom:6px; color:#0369a1;">
                                 <i class="fas fa-database" style="margin-left:8px;"></i>تعبئة قاعدة البيانات
                             </h3>
-                            <p style="color:#64748b; font-size:0.9rem; margin:0;">أضف 10 سجلات تجريبية واقعية لإجازات مرضية في قاعدة البيانات للتجربة</p>
+                            <p style="color:#64748b; font-size:0.9rem; margin:0;">أضف 10 سجلات تجريبية واقعية لإجازات
+                                مرضية في قاعدة البيانات للتجربة</p>
                         </div>
-                        <button id="seed-btn" onclick="seedDatabase()" style="background:linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color:white; border:none; padding:12px 28px; border-radius:12px; cursor:pointer; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:10px; transition:all 0.3s; box-shadow:0 4px 12px rgba(14,165,233,0.3);">
+                        <button id="seed-btn" onclick="seedDatabase()"
+                            style="background:linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color:white; border:none; padding:12px 28px; border-radius:12px; cursor:pointer; font-weight:700; font-size:1rem; display:flex; align-items:center; gap:10px; transition:all 0.3s; box-shadow:0 4px 12px rgba(14,165,233,0.3);">
                             <i class="fas fa-cloud-arrow-down"></i> شحن البيانات
                         </button>
                     </div>
@@ -101,7 +110,8 @@
                 <div class="card-container">
                     <div class="section-header">
                         <h3>أحدث 5 طلبات</h3>
-                        <button onclick="navTo('leaves')" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer;">
+                        <button onclick="navTo('leaves')"
+                            style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer;">
                             عرض الكل <i class="fas fa-arrow-left"></i>
                         </button>
                     </div>
@@ -131,27 +141,36 @@
                     <div class="section-header">
                         <h3>سجل الإجازات المرضية</h3>
                         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                            <button onclick="openAddLeaveModal()" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;" title="إضافة إجازة مباشرة">
+                            <button onclick="openAddLeaveModal()"
+                                style="background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;"
+                                title="إضافة إجازة مباشرة">
                                 <i class="fas fa-plus-circle"></i> إضافة إجازة
                             </button>
-                            <button onclick="refreshData()" style="background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;" title="تحديث البيانات">
+                            <button onclick="refreshData()"
+                                style="background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;"
+                                title="تحديث البيانات">
                                 <i class="fas fa-sync-alt"></i> تحديث
                             </button>
-                            <input type="text" id="searchInput" placeholder="بحث بالاسم أو رقم الهوية..." style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:30px; outline:none; width:250px;">
+                            <input type="text" id="searchInput" placeholder="بحث بالاسم أو رقم الهوية..."
+                                style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:30px; outline:none; width:250px;">
                         </div>
                     </div>
                     <!-- Filter Buttons -->
                     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
-                        <button onclick="filterByStatus('all')" class="filter-btn active" data-filter="all" style="padding:8px 18px; border-radius:20px; border:2px solid var(--primary); background:var(--primary); color:white; font-weight:600; cursor:pointer; transition:0.2s;">
+                        <button onclick="filterByStatus('all')" class="filter-btn active" data-filter="all"
+                            style="padding:8px 18px; border-radius:20px; border:2px solid var(--primary); background:var(--primary); color:white; font-weight:600; cursor:pointer; transition:0.2s;">
                             الكل
                         </button>
-                        <button onclick="filterByStatus('pending')" class="filter-btn" data-filter="pending" style="padding:8px 18px; border-radius:20px; border:2px solid #ea580c; background:transparent; color:#ea580c; font-weight:600; cursor:pointer; transition:0.2s;">
+                        <button onclick="filterByStatus('pending')" class="filter-btn" data-filter="pending"
+                            style="padding:8px 18px; border-radius:20px; border:2px solid #ea580c; background:transparent; color:#ea580c; font-weight:600; cursor:pointer; transition:0.2s;">
                             <i class="fas fa-clock"></i> قيد المراجعة
                         </button>
-                        <button onclick="filterByStatus('approved')" class="filter-btn" data-filter="approved" style="padding:8px 18px; border-radius:20px; border:2px solid #16a34a; background:transparent; color:#16a34a; font-weight:600; cursor:pointer; transition:0.2s;">
+                        <button onclick="filterByStatus('approved')" class="filter-btn" data-filter="approved"
+                            style="padding:8px 18px; border-radius:20px; border:2px solid #16a34a; background:transparent; color:#16a34a; font-weight:600; cursor:pointer; transition:0.2s;">
                             <i class="fas fa-check"></i> مقبولة
                         </button>
-                        <button onclick="filterByStatus('rejected')" class="filter-btn" data-filter="rejected" style="padding:8px 18px; border-radius:20px; border:2px solid #dc2626; background:transparent; color:#dc2626; font-weight:600; cursor:pointer; transition:0.2s;">
+                        <button onclick="filterByStatus('rejected')" class="filter-btn" data-filter="rejected"
+                            style="padding:8px 18px; border-radius:20px; border:2px solid #dc2626; background:transparent; color:#dc2626; font-weight:600; cursor:pointer; transition:0.2s;">
                             <i class="fas fa-times"></i> مرفوضة
                         </button>
                     </div>
@@ -181,7 +200,8 @@
             <div id="staff" class="page-section">
                 <div class="staff-grid">
                     <div class="add-staff-card" onclick="openModal()">
-                        <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:15px; color:#64748b;">
+                        <div
+                            style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:15px; color:#64748b;">
                             <i class="fas fa-plus fa-lg"></i>
                         </div>
                         <h3 style="color:#475569;">إضافة موظف جديد</h3>
@@ -195,13 +215,18 @@
                     <h3 style="margin-bottom:20px;">إعدادات النظام</h3>
                     <div style="margin-bottom:20px;">
                         <label style="display:block; margin-bottom:8px; font-weight:600;">اسم النظام</label>
-                        <input type="text" value="منصة صحة الرقمية" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <input type="text" value="منصة صحة الرقمية"
+                            style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
                     </div>
                     <div style="margin-bottom:20px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:600;">البريد الإلكتروني للدعم</label>
-                        <input type="text" value="support@seha.sa" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <label style="display:block; margin-bottom:8px; font-weight:600;">البريد الإلكتروني
+                            للدعم</label>
+                        <input type="text" value="support@seha.sa"
+                            style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
                     </div>
-                    <button style="background:var(--primary); color:white; padding:12px 24px; border:none; border-radius:8px; font-weight:700; width:100%; cursor:pointer;" onclick="showToast('تم حفظ الإعدادات بنجاح')">
+                    <button
+                        style="background:var(--primary); color:white; padding:12px 24px; border:none; border-radius:8px; font-weight:700; width:100%; cursor:pointer;"
+                        onclick="showToast('تم حفظ الإعدادات بنجاح')">
                         حفظ التغييرات
                     </button>
                 </div>
@@ -218,13 +243,15 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <input type="text" placeholder="الاسم الكامل" style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:15px;">
+            <input type="text" placeholder="الاسم الكامل"
+                style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:15px;">
             <select style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:15px;">
                 <option>طبيب عام</option>
                 <option>ممرض</option>
                 <option>إداري</option>
             </select>
-            <button onclick="addStaff()" style="width:100%; background:var(--primary); color:white; padding:12px; border:none; border-radius:8px; font-weight:700; cursor:pointer;">
+            <button onclick="addStaff()"
+                style="width:100%; background:var(--primary); color:white; padding:12px; border:none; border-radius:8px; font-weight:700; cursor:pointer;">
                 إضافة
             </button>
         </div>
@@ -234,7 +261,8 @@
         <div class="modal-content" style="max-width:600px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h3>تفاصيل الطلب</h3>
-                <button onclick="closeDetailsModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
+                <button onclick="closeDetailsModal()"
+                    style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -246,39 +274,59 @@
         <div class="modal-content" style="max-width:700px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h3><i class="fas fa-plus-circle" style="color:var(--primary);"></i> إضافة إجازة مباشرة</h3>
-                <button onclick="closeAddLeaveModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
+                <button onclick="closeAddLeaveModal()"
+                    style="background:none; border:none; font-size:1.2rem; cursor:pointer;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <form id="direct-leave-form" onsubmit="submitDirectLeave(event)">
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (عربي) *</label>
-                        <input type="text" id="dl-nameAr" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="أحمد محمد">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (عربي)
+                            *</label>
+                        <input type="text" id="dl-nameAr" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="أحمد محمد">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم (إنجليزي) *</label>
-                        <input type="text" id="dl-nameEn" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="Ahmed Mohammed">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الاسم
+                            (إنجليزي) *</label>
+                        <input type="text" id="dl-nameEn" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="Ahmed Mohammed">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">رقم الهوية *</label>
-                        <input type="text" id="dl-idNumber" required maxlength="10" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="10xxxxxxxx">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">رقم الهوية
+                            *</label>
+                        <input type="text" id="dl-idNumber" required maxlength="10"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="10xxxxxxxx">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ الميلاد *</label>
-                        <input type="date" id="dl-birthDate" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ
+                            الميلاد *</label>
+                        <input type="date" id="dl-birthDate" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الوظيفة *</label>
-                        <input type="text" id="dl-job" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="المسمى الوظيفي">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الوظيفة
+                            *</label>
+                        <input type="text" id="dl-job" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="المسمى الوظيفي">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">جهة العمل *</label>
-                        <input type="text" id="dl-employer" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="جهة العمل">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">جهة العمل
+                            *</label>
+                        <input type="text" id="dl-employer" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="جهة العمل">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الجنسية *</label>
-                        <select id="dl-nationality" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">الجنسية
+                            *</label>
+                        <select id="dl-nationality" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
                             <option value="">-- اختر --</option>
                             <option value="سعودي">سعودي</option>
                             <option value="مصري">مصري</option>
@@ -289,48 +337,66 @@
                         </select>
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المدينة *</label>
-                        <input type="text" id="dl-city" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="المدينة">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المدينة
+                            *</label>
+                        <input type="text" id="dl-city" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="المدينة">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ البدء *</label>
-                        <input type="date" id="dl-startDate" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
-                    </div>
-                </div>
-                <!-- Optional fields - Commented out as they are missing in DB -->
-                <!--
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;">
-                    <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ النهاية</label>
-                        <input type="date" id="dl-endDate" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ البدء
+                            *</label>
+                        <input type="date" id="dl-startDate" required
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">عدد الأيام</label>
-                        <input type="number" id="dl-daysCount" min="1" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="3">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">تاريخ
+                            النهاية</label>
+                        <input type="date" id="dl-endDate"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">اسم الطبيب</label>
-                        <input type="text" id="dl-doctorName" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="د. محمد">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">عدد
+                            الأيام</label>
+                        <input type="number" id="dl-daysCount" min="1"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="3">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المستشفى</label>
-                        <input type="text" id="dl-hospitalName" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="اسم المستشفى">
+                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">اسم
+                            الطبيب</label>
+                        <input type="text" id="dl-doctorName"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="د. محمد">
                     </div>
                     <div>
-                        <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">التشخيص</label>
-                        <input type="text" id="dl-diagnosis" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;" placeholder="التشخيص">
+                        <label
+                            style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">المستشفى</label>
+                        <input type="text" id="dl-hospitalName"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="اسم المستشفى">
+                    </div>
+                    <div>
+                        <label
+                            style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">التشخيص</label>
+                        <input type="text" id="dl-diagnosis"
+                            style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px;"
+                            placeholder="التشخيص">
                     </div>
                 </div>
                 <div style="margin-top:15px;">
                     <label style="display:block; margin-bottom:6px; font-weight:600; font-size:0.9rem;">ملاحظات</label>
-                    <textarea id="dl-notes" rows="2" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px; resize:vertical;" placeholder="ملاحظات إضافية..."></textarea>
+                    <textarea id="dl-notes" rows="2"
+                        style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:8px; resize:vertical;"
+                        placeholder="ملاحظات إضافية..."></textarea>
                 </div>
-                -->
                 <div style="display:flex; gap:10px; margin-top:20px;">
-                    <button type="submit" style="flex:1; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; font-size:1rem;">
+                    <button type="submit"
+                        style="flex:1; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; font-size:1rem;">
                         <i class="fas fa-check-circle"></i> إضافة وموافقة مباشرة
                     </button>
-                    <button type="button" onclick="closeAddLeaveModal()" style="padding:14px 24px; background:#f1f5f9; color:#475569; border:none; border-radius:12px; font-weight:700; cursor:pointer;">
+                    <button type="button" onclick="closeAddLeaveModal()"
+                        style="padding:14px 24px; background:#f1f5f9; color:#475569; border:none; border-radius:12px; font-weight:700; cursor:pointer;">
                         إلغاء
                     </button>
                 </div>
@@ -354,4 +420,5 @@
         }
     </script>
 </body>
+
 </html>
