@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SickLeave {
+  id              Int      @id @default(autoincrement())
+  serviceCode     String   @unique @default("TEMP00000000000")
+  patientNameEn   String
+  patientNameAr   String
+  idNumber        String
+  birthDate       DateTime
+  job             String
+  employer        String
+  nationality     String
+  city            String
+  startDate       DateTime
+  endDate         DateTime?
+  daysCount       Int?
+  diagnosis       String?
+  doctorName      String?
+  hospitalName    String?
+  notes           String?
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+
+  @@map("sick_leaves")
+}

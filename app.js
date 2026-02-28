@@ -9,6 +9,9 @@ const MOCK_STAFF = [
 
 let globalLeaves = [];
 
+// --- CONFIGURATION ---
+const API_BASE_URL = window.location.origin; // Same origin by default, but can be changed if API is elsewhere
+
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
@@ -35,7 +38,7 @@ window.seedDatabase = async () => {
     btn.disabled = true;
 
     try {
-        const response = await fetch('/api/seed-data', { method: 'POST' });
+        const response = await fetch(`${API_BASE_URL}/api/seed-data`, { method: 'POST' });
         const data = await response.json();
 
         if (data.success) {
@@ -254,7 +257,7 @@ async function changeStatus(id, newStatus) {
     showToast('⏳ جاري تحديث الحالة...');
 
     try {
-        const response = await fetch('/api/update-status', {
+        const response = await fetch(`${API_BASE_URL}/api/update-status`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, status: newStatus })
