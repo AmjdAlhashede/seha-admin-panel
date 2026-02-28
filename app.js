@@ -184,7 +184,7 @@ function renderTable(data, elementId, isFull) {
         const tr = document.createElement('tr');
         if (isFull) {
             tr.innerHTML = `
-                <td style="font-family:monospace; color:var(--primary); font-weight:700;">#${item.id}</td>
+                <td style="font-family:monospace; color:var(--primary); font-weight:700;">${item.serviceCode}</td>
                 <td style="font-weight:600;">${nameAr}</td>
                 <td style="font-weight:600;">${nameEn}</td>
                 <td style="font-family:monospace;">${item.idNumber || '-'}</td>
@@ -197,7 +197,7 @@ function renderTable(data, elementId, isFull) {
             `;
         } else {
             tr.innerHTML = `
-                <td style="font-family:monospace;">#${item.id}</td>
+                <td style="font-family:monospace;">${item.serviceCode}</td>
                 <td style="font-weight:600;">${nameAr}</td>
                 <td>${date}</td>
                 <td>${statusBadge}</td>
@@ -410,7 +410,7 @@ window.viewDetails = (leaveId) => {
             </div>
             <h3 style="color:white; margin:0; font-size:1.3rem;">${nameAr}</h3>
             <p style="color:rgba(255,255,255,0.8); margin:5px 0 0 0; font-size:0.95rem;">${nameEn}</p>
-            <p style="color:rgba(255,255,255,0.9); margin:5px 0 0 0; font-size:0.9rem;">رقم الطلب: #${leave.id}</p>
+            <p style="color:rgba(255,255,255,0.9); margin:5px 0 0 0; font-size:0.9rem;">رمز الخدمة: ${leave.serviceCode}</p>
         </div>
 
         <div style="background:#f8fafc; padding:20px; border-radius:12px; margin-bottom:15px;">
