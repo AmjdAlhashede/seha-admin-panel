@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function checkAuth() {
-    if (!localStorage.getItem('admin_token')) {
+    if (!localStorage.getItem('admin_token') && !sessionStorage.getItem('admin_token')) {
         window.location.href = 'login.html';
     }
 }
@@ -27,6 +27,8 @@ function checkAuth() {
 window.logout = () => {
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_user');
+    sessionStorage.removeItem('admin_token');
+    sessionStorage.removeItem('admin_user');
     window.location.href = 'login.html';
 };
 
@@ -136,71 +138,56 @@ function hideLoadingState() {
 }
 
 // --- RENDERING ---
-function renderTable(data, elementId, isFull) {
+function renderTable(data, elementId, isDashboard = false) {
     const tbody = document.getElementById(elementId);
     if (!tbody) return;
     tbody.innerHTML = '';
 
     if (data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="${isFull ? 10 : 4}" style="text-align:center; padding:40px;">
-            <div style="color:#94a3b8;">
-                <i class="fas fa-inbox" style="font-size:3rem; margin-bottom:15px; opacity:0.5;"></i>
-                <p style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">لا توجد بيانات</p>
-                <p style="font-size:0.9rem;">أضف طلب إجازة من البورتال لتظهر هنا</p>
-            </div>
-        </td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="${isDashboard ? 4 : 10}" style="text-align:center; padding:30px; color:var(--text-muted);">لا يوجد بيانات حالياً</td></tr>`;
         return;
     }
 
-    data.forEach(item => {
+    data.forEach((item, idx) => {
         const date = new Date(item.startDate).toLocaleDateString('ar-SA');
-
-        // Support old data format (patientName) and new format (patientNameAr, patientNameEn)
         const nameAr = item.patientNameAr || item.patientName || '-';
         const nameEn = item.patientNameEn || item.patientName || '-';
 
-        let statusBadge = '';
-        if (item.status === 'pending') statusBadge = '<span class="status-badge pending"><i class="fas fa-clock"></i> قيد المراجعة</span>';
-        if (item.status === 'approved') statusBadge = '<span class="status-badge approved"><i class="fas fa-check"></i> مقبولة</span>';
-        if (item.status === 'rejected') statusBadge = '<span class="status-badge rejected"><i class="fas fa-times"></i> مرفوضة</span>';
-
-        let actions = '';
-        if (item.status === 'pending') {
-            actions = `
-                <button onclick="changeStatus('${item.id}', 'approved')" style="border:none; background:#dcfce7; color:#166534; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="موافقة"><i class="fas fa-check"></i></button>
-                <button onclick="changeStatus('${item.id}', 'rejected')" style="border:none; background:#fee2e2; color:#991b1b; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="رفض"><i class="fas fa-times"></i></button>
-                <button onclick="viewDetails('${item.id}')" style="border:none; background:#e0e7ff; color:#4338ca; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="التفاصيل"><i class="fas fa-eye"></i></button>
-                <button onclick="printLeave('${item.id}')" style="border:none; background:#f1f5f9; color:#475569; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="طباعة"><i class="fas fa-print"></i></button>
-                <button onclick="deleteLeave('${item.id}')" style="border:none; background:#fef2f2; color:#dc2626; padding:5px 10px; border-radius:6px; cursor:pointer;" title="حذف"><i class="fas fa-trash"></i></button>
-            `;
-        } else {
-            actions = `
-                <button onclick="viewDetails('${item.id}')" style="border:none; background:#e0e7ff; color:#4338ca; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="التفاصيل"><i class="fas fa-eye"></i></button>
-                <button onclick="printLeave('${item.id}')" style="border:none; background:#f1f5f9; color:#475569; padding:5px 10px; border-radius:6px; cursor:pointer; margin-left:5px;" title="طباعة"><i class="fas fa-print"></i></button>
-                <button onclick="deleteLeave('${item.id}')" style="border:none; background:#fef2f2; color:#dc2626; padding:5px 10px; border-radius:6px; cursor:pointer;" title="حذف"><i class="fas fa-trash"></i></button>
-            `;
-        }
+        let statusClass = 'pending';
+        let statusText = 'قيد المراجعة';
+        if (item.status === 'approved') { statusClass = 'approved'; statusText = 'مقبولة'; }
+        if (item.status === 'rejected') { statusClass = 'rejected'; statusText = 'مرفوضة'; }
 
         const tr = document.createElement('tr');
-        if (isFull) {
+        if (isDashboard) {
             tr.innerHTML = `
-                <td style="font-family:monospace; color:var(--primary); font-weight:700;">${item.serviceCode}</td>
-                <td style="font-weight:600;">${nameAr}</td>
-                <td style="font-weight:600;">${nameEn}</td>
-                <td style="font-family:monospace;">${item.idNumber || '-'}</td>
-                <td>${item.job || '-'}</td>
-                <td>${item.employer || '-'}</td>
-                <td>${item.city || '-'}</td>
-                <td>${date}</td>
-                <td>${statusBadge}</td>
-                <td style="white-space:nowrap;">${actions}</td>
+                <td data-label="#">${idx + 1}</td>
+                <td data-label="الاسم">${nameAr}</td>
+                <td data-label="التاريخ">${date}</td>
+                <td data-label="الحالة">
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                </td>
             `;
         } else {
             tr.innerHTML = `
-                <td style="font-family:monospace;">${item.serviceCode}</td>
-                <td style="font-weight:600;">${nameAr}</td>
-                <td>${date}</td>
-                <td>${statusBadge}</td>
+                <td data-label="رقم الطلب" style="font-family:monospace; color:var(--primary); font-weight:700;">${item.serviceCode || '-'}</td>
+                <td data-label="الاسم (عربي)" style="font-weight:600;">${nameAr}</td>
+                <td data-label="الاسم (إنجليزي)">${nameEn}</td>
+                <td data-label="رقم الهوية">${item.idNumber || '-'}</td>
+                <td data-label="الوظيفة">${item.job || '-'}</td>
+                <td data-label="جهة العمل">${item.employer || '-'}</td>
+                <td data-label="المدينة">${item.city || '-'}</td>
+                <td data-label="التاريخ">${date}</td>
+                <td data-label="الحالة">
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                </td>
+                <td data-label="الإجراء">
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="viewDetails('${item.id}')" style="border:none; background:#e0e7ff; color:#4338ca; padding:5px 10px; border-radius:6px; cursor:pointer;" title="التفاصيل"><i class="fas fa-eye"></i></button>
+                        <button onclick="printLeave('${item.id}')" style="border:none; background:#f1f5f9; color:#475569; padding:5px 10px; border-radius:6px; cursor:pointer;" title="طباعة"><i class="fas fa-print"></i></button>
+                        <button onclick="deleteLeave('${item.id}')" style="border:none; background:#fef2f2; color:#dc2626; padding:5px 10px; border-radius:6px; cursor:pointer;" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
             `;
         }
         tbody.appendChild(tr);
@@ -214,23 +201,23 @@ function renderStaff() {
     // Keep the "Add" card if exists
     // But easier to regenerate
     container.innerHTML = `
-        <div class="add-staff-card" onclick="openModal()">
+        < div class="add-staff-card" onclick = "openModal()" >
             <div style="width:60px; height:60px; background:#e2e8f0; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:15px; color:#64748b;">
                 <i class="fas fa-plus fa-lg"></i>
             </div>
             <h3 style="color:#475569;">إضافة موظف جديد</h3>
-        </div>
-    `;
+        </div >
+        `;
 
     MOCK_STAFF.forEach(member => {
         const div = document.createElement('div');
         div.className = 'staff-card';
         div.innerHTML = `
-            <img src="https://ui-avatars.com/api/?name=${member.name}&background=random" class="staff-avatar">
+        < img src = "https://ui-avatars.com/api/?name=${member.name}&background=random" class="staff-avatar" >
             <h3 style="font-size:1.1rem; margin-bottom:5px;">${member.name}</h3>
             <p style="color:var(--primary); font-weight:600; font-size:0.9rem;">${member.role}</p>
             <p style="color:#94a3b8; font-size:0.85rem;">${member.hospital}</p>
-        `;
+    `;
         container.appendChild(div);
     });
 }
@@ -257,7 +244,7 @@ async function changeStatus(id, newStatus) {
     showToast('⏳ جاري تحديث الحالة...');
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/update-status`, {
+        const response = await fetch(`${API_BASE_URL} /api/update - status`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, status: newStatus })
@@ -326,6 +313,67 @@ window.addStaff = () => {
     renderStaff();
 }
 
+window.updateAdminSettings = async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('save-settings-btn');
+    const originalHTML = btn.innerHTML;
+
+    // Get current user info
+    const adminUser = JSON.parse(localStorage.getItem('admin_user') || '{}');
+    const currentUsername = adminUser.username || 'admin';
+
+    const newUsername = document.getElementById('set-username').value;
+    const newPassword = document.getElementById('set-password').value;
+    const rememberMe = document.getElementById('set-rememberMe').checked;
+
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> جاري الحفظ...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch('/api/update-settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                currentUsername,
+                newUsername,
+                newPassword,
+                rememberMe
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showToast('✅ تم تحديث الإعدادات بنجاح');
+            // Update local info
+            adminUser.username = data.user.username;
+            adminUser.rememberMe = data.user.rememberMeDefault;
+            localStorage.setItem('admin_user', JSON.stringify(adminUser));
+
+            // Clear password fields
+            document.getElementById('set-password').value = '';
+            document.getElementById('set-username').value = '';
+        } else {
+            showToast('❌ ' + (data.message || 'فشل التحديث'));
+        }
+    } catch (error) {
+        console.error('Update settings error:', error);
+        showToast('❌ حدث خطأ في الاتصال');
+    } finally {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+    }
+};
+
+// Initialize settings state
+setTimeout(() => {
+    const adminUser = JSON.parse(localStorage.getItem('admin_user') || '{}');
+    const remToggle = document.getElementById('set-rememberMe');
+    if (remToggle && adminUser.rememberMe !== undefined) {
+        remToggle.checked = adminUser.rememberMe;
+    }
+}, 1000);
+
 window.showToast = (msg) => {
     const t = document.getElementById('toast');
     const txt = document.getElementById('toastMsg');
@@ -390,7 +438,7 @@ window.viewDetails = (leaveId) => {
     let actionButtons = '';
     if (leave.status === 'pending') {
         actionButtons = `
-            <div style="display:flex; gap:10px; margin-top:20px;">
+        < div style = "display:flex; gap:10px; margin-top:20px;" >
                 <button onclick="approveFromModal('${leave.id}')" 
                     style="flex:1; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:1rem; transition:0.2s;">
                     <i class="fas fa-check-circle"></i> موافقة
@@ -399,19 +447,19 @@ window.viewDetails = (leaveId) => {
                     style="flex:1; background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color:white; border:none; padding:14px; border-radius:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-size:1rem; transition:0.2s;">
                     <i class="fas fa-times-circle"></i> رفض
                 </button>
-            </div>
+            </div >
         `;
     }
 
     const detailsHTML = `
-        <div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding:25px; border-radius:12px 12px 0 0; margin:-30px -30px 20px -30px; text-align:center;">
+        < div style = "background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding:25px; border-radius:12px 12px 0 0; margin:-30px -30px 20px -30px; text-align:center;" >
             <div style="width:80px; height:80px; background:white; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
                 <i class="fas fa-user-injured" style="font-size:2.5rem; color:#667eea;"></i>
             </div>
             <h3 style="color:white; margin:0; font-size:1.3rem;">${nameAr}</h3>
             <p style="color:rgba(255,255,255,0.8); margin:5px 0 0 0; font-size:0.95rem;">${nameEn}</p>
             <p style="color:rgba(255,255,255,0.9); margin:5px 0 0 0; font-size:0.9rem;">رمز الخدمة: ${leave.serviceCode}</p>
-        </div>
+        </div >
 
         <div style="background:#f8fafc; padding:20px; border-radius:12px; margin-bottom:15px;">
             <h4 style="color:var(--primary); margin-bottom:15px; font-size:1.1rem; display:flex; align-items:center; gap:8px;">
@@ -579,7 +627,7 @@ window.deleteLeave = async (id) => {
     showToast('⏳ جاري الحذف...');
 
     try {
-        const response = await fetch(`/api/delete-leave?id=${id}`, {
+        const response = await fetch(`/ api / delete -leave ? id = ${id} `, {
             method: 'DELETE'
         });
 
@@ -657,7 +705,7 @@ window.submitDirectLeave = async (e) => {
         const filtered = currentFilter === 'all' ? globalLeaves : globalLeaves.filter(l => l.status === currentFilter);
         renderTable(filtered, 'leaves-table-body', true);
 
-        showToast(`✅ تم إضافة الإجازة بنجاح - رمز: ${result.serviceCode}`);
+        showToast(`✅ تم إضافة الإجازة بنجاح - رمز: ${result.serviceCode} `);
     } catch (error) {
         console.error('Add Leave Error:', error);
         showToast('❌ فشل إضافة الإجازة');

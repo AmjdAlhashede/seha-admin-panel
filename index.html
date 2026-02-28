@@ -212,23 +212,44 @@
             <!-- SETTINGS SECTION -->
             <div id="settings" class="page-section">
                 <div class="card-container" style="max-width:600px;">
-                    <h3 style="margin-bottom:20px;">إعدادات النظام</h3>
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:600;">اسم النظام</label>
-                        <input type="text" value="منصة صحة الرقمية"
-                            style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
-                    </div>
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:600;">البريد الإلكتروني
-                            للدعم</label>
-                        <input type="text" value="support@seha.sa"
-                            style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
-                    </div>
-                    <button
-                        style="background:var(--primary); color:white; padding:12px 24px; border:none; border-radius:8px; font-weight:700; width:100%; cursor:pointer;"
-                        onclick="showToast('تم حفظ الإعدادات بنجاح')">
-                        حفظ التغييرات
-                    </button>
+                    <h3 style="margin-bottom:20px;"><i class="fas fa-user-shield"
+                            style="margin-left:10px; color:var(--primary);"></i> إعدادات حساب المسؤول</h3>
+
+                    <form id="settings-form" onsubmit="updateAdminSettings(event)">
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block; margin-bottom:8px; font-weight:600;">اسم المستخدم
+                                الجديد</label>
+                            <input type="text" id="set-username" placeholder="اتركه فارغاً للدقة الحالية"
+                                style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                        </div>
+
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block; margin-bottom:8px; font-weight:600;">كلمة المرور
+                                الجديدة</label>
+                            <input type="password" id="set-password" placeholder="اتركها فارغة للدقة الحالية"
+                                style="width:100%; padding:12px; border:1px solid #e2e8f0; border-radius:8px;">
+                        </div>
+
+                        <hr style="margin:25px 0; border:0; border-top:1px solid #eee;">
+
+                        <div
+                            style="margin-bottom:25px; display:flex; align-items:center; justify-content:space-between; background:#f8fafc; padding:15px; border-radius:12px;">
+                            <div>
+                                <h4 style="margin-bottom:5px; font-size:1rem;">البقاء متصلاً (Remember Me)</h4>
+                                <p style="color:#64748b; font-size:0.85rem; margin:0;">عند التفعيل، لن يطلب منك النظام
+                                    تسجيل الدخول في كل مرة تفتح فيها المتصفح.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="set-rememberMe">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" id="save-settings-btn"
+                            style="background:var(--primary); color:white; padding:14px 24px; border:none; border-radius:12px; font-weight:700; width:100%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:10px;">
+                            <i class="fas fa-save"></i> حفظ التغييرات
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

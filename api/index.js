@@ -34,6 +34,7 @@ const updateStatus = require('./_lib/handlers/update-status');
 const deleteLeave = require('./_lib/handlers/delete-leave');
 const addLeaveDirect = require('./_lib/handlers/add-leave-direct');
 const seedData = require('./_lib/handlers/seed-data');
+const updateSettings = require('./_lib/handlers/update-settings');
 
 // Portal Handlers (Migrated)
 const addLeave = require('./_lib/handlers/add-leave');
@@ -58,6 +59,7 @@ const safeInvoke = (handler) => async (req, res) => {
 
 // API Routes for Admin Panel
 app.post('/api/admin-login', safeInvoke(adminLogin));
+app.post('/api/update-settings', safeInvoke(updateSettings));
 app.get('/api/get-leaves', safeInvoke(getLeaves));
 app.patch('/api/update-status', safeInvoke(updateStatus));
 app.delete('/api/delete-leave', safeInvoke(deleteLeave));

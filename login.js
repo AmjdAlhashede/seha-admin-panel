@@ -25,9 +25,12 @@ document.getElementById('login-form').addEventListener('submit', async function 
         const data = await response.json();
 
         if (response.ok && data.success) {
+            // Respect "Remember Me" setting from server/db
+            const storage = data.user.rememberMe ? localStorage : sessionStorage;
+
             // Save token and user info
-            localStorage.setItem('admin_token', data.token);
-            localStorage.setItem('admin_user', JSON.stringify(data.user));
+            storage.setItem('admin_token', data.token);
+            storage.setItem('admin_user', JSON.stringify(data.user));
 
             // Redirect to dashboard
             window.location.href = 'index.html';
@@ -48,6 +51,6 @@ document.getElementById('login-form').addEventListener('submit', async function 
 });
 
 // Check if already logged in
-if (localStorage.getItem('admin_token')) {
+if (localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token')) {
     window.location.href = 'index.html';
 }
