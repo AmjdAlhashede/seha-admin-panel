@@ -4,258 +4,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - تسجيل الدخول</title>
+    <title>تسجيل دخول المدير | منصة صحة</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --bg: #f8fafc;
-            --text: #1e293b;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --accent: #0f172a;
+            --bg: #f0f9ff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
             --error: #ef4444;
-            --success: #10b981;
+            --white: #ffffff;
+            --radius-lg: 24px;
+            --radius-md: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', 'Inter', sans-serif;
+            font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            height: 100vh;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(200, 100%, 95%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(210, 100%, 90%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(190, 100%, 95%, 1) 0, transparent 50%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Abstract shapes for premium feel */
+        .shape {
+            position: absolute;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #38bdf8;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 480px;
+            perspective: 1000px;
         }
 
         .login-card {
-            background: white;
-            width: 100%;
-            max-width: 450px;
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            position: relative;
-            z-index: 10;
-            animation: fadeIn 0.6s ease-out;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 50px 45px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.15);
+            animation: cardEntrance 0.8s ease-out;
         }
 
-        @keyframes fadeIn {
+        @keyframes cardEntrance {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px) rotateX(-5deg);
             }
-
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0);
             }
         }
 
-        .header {
+        .brand-section {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .logo-circle {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 50%;
+        .logo-box {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 20px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 12px 24px rgba(2, 132, 199, 0.3);
+            position: relative;
         }
 
-        .logo-circle i {
-            font-size: 2.5rem;
+        .logo-box::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 24px;
+            border: 2px solid var(--primary-light);
+            opacity: 0.5;
+        }
+
+        .logo-box i {
+            font-size: 2.2rem;
             color: white;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         h1 {
-            color: var(--text);
-            font-size: 1.8rem;
+            font-size: 1.75rem;
+            color: var(--text-main);
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
-        p.subtitle {
-            color: #64748b;
-            font-size: 0.95rem;
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        .input-group {
+        .form-group {
             margin-bottom: 24px;
-            position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #475569;
-            font-weight: 600;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 4px;
+        }
+
+        .input-wrapper {
+            position: relative;
         }
 
         input {
             width: 100%;
-            padding: 14px 16px;
-            padding-right: 48px;
+            padding: 16px 52px 16px 16px;
+            background: var(--white);
             border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            color: var(--text-main);
+            transition: var(--transition);
             outline: none;
-            background: #f8fafc;
+            font-weight: 500;
         }
 
         input:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
             background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
 
         .input-icon {
             position: absolute;
-            right: 16px;
-            top: 42px;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #94a3b8;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            font-size: 1.25rem;
+            transition: var(--transition);
         }
 
-        input:focus+.input-icon {
+        input:focus + .input-icon {
             color: var(--primary);
         }
 
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-            filter: brightness(1.1);
-        }
-
-        .btn-login:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .error-message {
+        .error-container {
             background: #fef2f2;
+            border: 1px solid #fee2e2;
             color: var(--error);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: var(--radius-md);
             margin-bottom: 24px;
             font-size: 0.9rem;
             display: none;
             align-items: center;
-            gap: 8px;
-            border: 1px solid #fee2e2;
+            gap: 10px;
+            font-weight: 600;
+            animation: shake 0.4s ease-in-out;
         }
 
-        .footer {
-            margin-top: 30px;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(2, 132, 199, 0.3);
+            filter: brightness(1.05);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .version-tag {
             text-align: center;
-            color: #94a3b8;
+            margin-top: 35px;
+            color: var(--text-muted);
             font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        /* Glassmorphism background elements */
-        .circle {
-            position: absolute;
+        .version-tag::before, .version-tag::after {
+            content: '';
+            height: 1px;
+            width: 30px;
+            background: #e2e8f0;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            z-index: 1;
+            animation: spin 0.8s linear infinite;
         }
 
-        .c1 {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .c2 {
-            width: 200px;
-            height: 200px;
-            bottom: -50px;
-            right: -50px;
+        [dir="rtl"] .submit-btn i {
+            transform: rotate(180deg);
         }
     </style>
 </head>
 
 <body>
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
 
-    <div class="login-card">
-        <div class="header">
-            <div class="logo-circle">
-                <i class="fas fa-shield-halved"></i>
-            </div>
-            <h1>لوحة الإدارة</h1>
-            <p class="subtitle">قم بتسجيل الدخول للوصول إلى النظام</p>
-        </div>
-
-        <div id="error-box" class="error-message">
-            <i class="fas fa-exclamation-circle"></i>
-            <span id="error-text">خطأ في اسم المستخدم أو كلمة المرور</span>
-        </div>
-
-        <form id="login-form">
-            <div class="input-group">
-                <label for="username">اسم المستخدم</label>
-                <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
-                <i class="fas fa-user input-icon"></i>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-section">
+                <div class="logo-box">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h1>لوحة تحكم المدير</h1>
+                <p class="subtitle">أهلاً بك مجدداً، يرجى تسجيل الدخول</p>
             </div>
 
-            <div class="input-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
-                <i class="fas fa-lock input-icon"></i>
+            <div id="error-box" class="error-container">
+                <i class="fas fa-circle-exclamation"></i>
+                <span id="error-text">عذراً، البيانات المدخلة غير صحيحة</span>
             </div>
 
-            <button type="submit" id="submit-btn" class="btn-login">
-                <span>دخول</span>
-                <i class="fas fa-arrow-left"></i>
-            </button>
-        </form>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" placeholder="مثال: admin" required autocomplete="username">
+                        <i class="fas fa-user-circle input-icon"></i>
+                    </div>
+                </div>
 
-        <div class="footer">
-            &copy; 2026 منصة صحة - جميع الحقوق محفوظة
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                        <i class="fas fa-lock-keyhole input-icon"></i>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn" class="submit-btn">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btn-text">تسجيل الدخول</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="version-tag">
+                منصة صحة الرقمية &copy; 2026
+            </div>
         </div>
     </div>
 
     <script src="login.js"></script>
+    <script>
+        // Smooth form transition
+        const form = document.getElementById('login-form');
+        const btn = document.getElementById('submit-btn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btn-text');
+
+        form.addEventListener('submit', () => {
+            btn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.style.opacity = '0.7';
+        });
+    </script>
 </body>
 
 </html>
